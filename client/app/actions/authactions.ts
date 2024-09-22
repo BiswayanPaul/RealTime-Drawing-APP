@@ -34,6 +34,7 @@ export async function Register({
 
     return { success: "New User Created", user };
   } catch (error) {
+    console.log(error);
     throw new Error("Can't create User");
   }
 }

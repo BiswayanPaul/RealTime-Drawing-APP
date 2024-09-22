@@ -112,7 +112,7 @@ const SignInPage = () => {
               />
               <div className="text-center">
                 <Button variant="link" className="text-blue-500">
-                  <Link href="/register">Don't have an account?</Link>
+                  <Link href="/register">Don&apos;t have an account?</Link>
                 </Button>
               </div>
               <div className="p-2 w-full">
