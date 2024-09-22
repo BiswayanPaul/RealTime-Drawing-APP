@@ -28,7 +28,7 @@ const Canvas: FC<pageProps> = ({ roomId }) => {
       if (data.type === "draw") {
         drawLineFromData(data);
       } else if (data.type === "clear") {
-        clearCanvas(); // Clear canvas for all users
+        clear(); // Clear canvas for all users
       }
     };
 
@@ -37,7 +37,7 @@ const Canvas: FC<pageProps> = ({ roomId }) => {
     return () => {
       websocket.close();
     };
-  }, [roomId]);
+  }, [roomId]); // Only depend on roomId
 
   function drawLine({ prevPoint, currentPoint, ctx }: Draw) {
     const { x: currX, y: currY } = currentPoint;
@@ -66,7 +66,13 @@ const Canvas: FC<pageProps> = ({ roomId }) => {
   }
 
   // Function to draw received data
-  function drawLineFromData(data: any) {
+  function drawLineFromData(data: {
+    type: string;
+    lineColor: string;
+    startPoint: Point;
+    currX: number;
+    currY: number;
+  }) {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -86,16 +92,12 @@ const Canvas: FC<pageProps> = ({ roomId }) => {
     ctx.fill();
   }
 
-  const clearCanvas = () => {
-    clear(); // Clear local canvas
-  };
-
   const handleClear = () => {
     // Send clear command to the WebSocket server
     if (ws) {
       ws.send(JSON.stringify({ type: "clear" }));
     }
-    clearCanvas(); // Also clear local canvas
+    clear(); // Clear local canvas
   };
 
   const handleLeaveRoom = () => {
