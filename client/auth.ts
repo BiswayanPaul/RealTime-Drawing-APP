@@ -52,7 +52,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         const existingUser = await prisma.user.findUnique({
           where: { email: profile.email },
         });
-        
+
         if (!existingUser) {
           await prisma.user.create({
             data: {
